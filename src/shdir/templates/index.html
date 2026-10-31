@@ -37,7 +37,7 @@
 
         {% endfor %}
       </h2>
-     {% if upload %}
+      {% if upload %}
       <div class="upload-block">
         <h4>Upload the file to the CWD</h4>
         <form action="" method="post" enctype="multipart/form-data">
@@ -47,7 +47,7 @@
       </div>
 
       {% endif %} 
-      
+
       <ul class="list">
         {% if not is_root %}
 
@@ -88,6 +88,17 @@
               <span class="logo file">{% include "icons/file.svg" %}</span>
               {{ file.name }} 
             </a>
+            {% if file.ext in ['.mp4', '.mov', '.avi', '.webm', '.mkv', '.flv', '.wmv', '.3gp'] %}
+            <a
+                href="/?media={{ file.path }}"
+                title="Play the media"
+                class="media-button"
+                >
+                <span class="logo zip">
+                  {% include "icons/play.svg" %}
+                </span>
+            </a>
+            {% endif %}
           </div>
         </li>
         {% endfor %}

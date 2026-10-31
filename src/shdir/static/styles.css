@@ -423,3 +423,35 @@ input:focus-visible {
 .line-block > a.file-link .logo {
     color: var(--blue);
 }
+.line-block > a.media-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    flex: 0 0 40px;
+    width: 40px;
+    min-width: 40px;
+    height: 40px;
+
+    margin-left: auto;
+    padding: 8px;
+
+    border: 1px solid #62594f;
+    border-radius: 11px;
+    background: var(--hover);
+    color: var(--green);
+
+    transition: background 150ms ease, border-color 150ms ease;
+}
+
+.line-block > a.media-button .logo {
+    width: 22px;
+    height: 22px;
+    color: var(--green);
+}
+
+.line-block > a.media-button:hover {
+    border-color: var(--green);
+    background: #45403d;
+    color: var(--green);
+}

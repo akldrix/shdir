@@ -1,9 +1,6 @@
-import io
-import os
 import secrets
 import shutil
 import urllib
-import zipfile
 from contextlib import asynccontextmanager
 from pathlib import Path
 
@@ -128,7 +125,7 @@ async def get_files_page(request: Request, subpath: str = ""):
         target_path = (BASE_DIR / zip_target).resolve()
 
         if (
-            not target_path.relative_to(BASE_DIR)
+            not target_path.is_relative_to(BASE_DIR)
             or not target_path.exists()
             or not target_path.is_dir()
         ):
@@ -148,6 +145,23 @@ async def get_files_page(request: Request, subpath: str = ""):
             headers={
                 "Content-Disposition": f"attachment; filename*=UTF-8''{encoded_filename}"
             },
+        )
+
+    media_target = request.query_params.get("media")
+
+    if media_target:
+        target_path = (BASE_DIR / media_target).resolve()
+
+        if (
+            not target_path.is_relative_to(BASE_DIR)
+            or not target_path.exists()
+            or not target_path.is_file()
+        ):
+            raise HTTPException(status_code=403, detail="Access denied or invalid file")
+        return FileResponse(
+            path=target_path,
+            media_type="video/mp4",
+            headers={"Content-Disposition": "inline"},
         )
 
     target_path = (BASE_DIR / subpath).resolve()
@@ -185,12 +199,11 @@ async def get_files_page(request: Request, subpath: str = ""):
                 }
             )
         elif path.is_file():
-            _, ext = os.path.splitext(path)
             files.append(
                 {
                     "name": path.name,
                     "path": web_rel_path,
-                    "ext": ext,
+                    "ext": path.suffix,
                 }
             )
     path_len = [p for p in subpath.split("/") if p]
