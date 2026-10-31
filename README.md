@@ -15,6 +15,7 @@ No cloud storage, no accounts, no third-party file-sharing services. Just start 
 - **Two-Way File Transfer** — download files from your computer and upload files from your phone.
 - **Directory Browsing** — navigate through shared folders and their contents directly in your browser.
 - **ZIP Downloads** — download entire directories as ZIP archives.
+- **Video Streaming** — stream videos directly in your browser without downloading the whole file.
 - **Optional Authentication** — protect access to your shared files with a randomly generated or custom access code.
 - **HTTPS Support** — optionally enable encrypted connections using a temporary self-signed TLS certificate.
 - **Upload Control** — disable file uploads when you only need to share files.
