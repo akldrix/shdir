@@ -82,6 +82,7 @@
         </li>
         {% endfor %}
         {% for file in files %}
+        {% if not file.name.startswith(".") %}
         <li class="search-item" data-name="{{ file.name | lower }}">
           <div class="line-block">
             <a href="/{{ file.path }}" download class="file-link">
@@ -94,13 +95,28 @@
                 title="Play the media"
                 class="media-button"
                 >
+
                 <span class="logo zip">
                   {% include "icons/play.svg" %}
                 </span>
+
+
             </a>
+            {% elif file.ext in [ '.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg', '.bmp', '.ico', '.tiff', '.avif'] %}
+            <a
+                href="/?media={{ file.path }}"
+                title="Play the media"
+                class="media-button"
+                >
+            <span class="logo zip">
+              {% include "icons/preview.svg" %}
+            </span>
+              </a>
             {% endif %}
           </div>
         </li>
+
+        {% endif %}
         {% endfor %}
       </ul>
     </div>

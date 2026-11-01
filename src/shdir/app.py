@@ -160,7 +160,7 @@ async def get_files_page(request: Request, subpath: str = ""):
             raise HTTPException(status_code=403, detail="Access denied or invalid file")
         return FileResponse(
             path=target_path,
-            media_type="video/mp4",
+            # media_type="video/mp4",
             headers={"Content-Disposition": "inline"},
         )
 
@@ -269,7 +269,7 @@ def run_app():
     if IS_HTTPS_ENABLED:
         with temp_tls_cert() as (cert_path, key_path):
             uvicorn.run(
-                "shdir.app:app",
+                "src.shdir.app:app",
                 host="0.0.0.0",
                 port=8000,
                 reload=False,
@@ -279,7 +279,7 @@ def run_app():
             )
     else:
         uvicorn.run(
-            "shdir.app:app",
+            "src.shdir.app:app",
             host="0.0.0.0",
             port=8000,
             reload=False,
