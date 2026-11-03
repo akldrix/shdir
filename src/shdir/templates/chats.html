@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{{ url_for('static', path='/chat.css') }}">
+
+    <title>Shmsg</title>
+  </head>
+  <body>
+    <div class="select-app">
+        <a href="/">To shdir</a>
+        <a href="/chat">To shmsg</a>
+      </div>
+
+    <div>
+      <form method="post">
+        <label for="chat-name">Enter chat name: </label>
+        <input type="text" name="name" placeholder="Chat name" required>
+        <button type="submit">Create new chat</button>
+      </form>
+    </div>
+    {% if chats %}
+    <div class="chat-list">
+      {% for chat in chats %}
+      <a href="/chat/{{ chat.id }}" class="chat-link">
+        {{ chat.name }}
+      </a>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </body>
+
+</html>

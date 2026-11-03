@@ -23,13 +23,18 @@ from fastapi.templating import Jinja2Templates
 from zipstream import ZipStream
 
 from .cli import args, make_qr
+from .database import Base, engine
+from .routes import router
 from .utils.colors import BLUE, CYAN, RESET
 from .utils.logs import log_config, logger
-from .utils.security import temp_tls_cert
+from .utils.security import (
+    COOKIE_NAME,
+    IS_AUTH_ENABLED,
+    SERVER_CODE,
+    check_authenticated,
+    temp_tls_cert,
+)
 
-COOKIE_NAME = "shdir_session"
-SERVER_CODE: str | None = None
-IS_AUTH_ENABLED = args.auth
 IS_HTTPS_ENABLED = args.https
 IS_UPLOAD_DISABLED = args.no_upload
 if args.dir:
@@ -48,23 +53,11 @@ TEMPLATE_DIR = Path(__file__).resolve().parent / "templates"
 STATIC_DIR = Path(__file__).resolve().parent / "static"
 
 
-if args.code:
-    IS_AUTH_ENABLED = True
-    SERVER_CODE = args.code
-elif IS_AUTH_ENABLED:
-    SERVER_CODE = "".join(secrets.choice("0123456789") for _ in range(6))
-
-
-def check_authenticated(request: Request):
-    if IS_AUTH_ENABLED:
-        session_token = request.cookies.get(COOKIE_NAME)
-
-        if not session_token or not secrets.compare_digest(session_token, SERVER_CODE):
-            raise HTTPException(status_code=401, detail="Not authenticated")
-
-
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
+
     logger.info(f"\n{CYAN} Sharing Directory: {BASE_DIR}{RESET}")
 
     if IS_AUTH_ENABLED and SERVER_CODE is not None:
@@ -78,6 +71,8 @@ async def lifespan(app: FastAPI):
 app = FastAPI(lifespan=lifespan)
 
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
+
+app.include_router(router)
 
 templates = Jinja2Templates(directory=TEMPLATE_DIR)
 
@@ -269,7 +264,7 @@ def run_app():
     if IS_HTTPS_ENABLED:
         with temp_tls_cert() as (cert_path, key_path):
             uvicorn.run(
-                "src.shdir.app:app",
+                "shdir.app:app",
                 host="0.0.0.0",
                 port=8000,
                 reload=False,
@@ -279,7 +274,7 @@ def run_app():
             )
     else:
         uvicorn.run(
-            "src.shdir.app:app",
+            "shdir.app:app",
             host="0.0.0.0",
             port=8000,
             reload=False,

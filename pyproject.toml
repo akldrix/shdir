@@ -1,6 +1,6 @@
 [project]
 name = "shdir"
-version = "1.1.1"
+version = "1.2.2"
 description = "Share your files in local network with secure connection"
 readme = "README.md"
 authors = [{ name = "Rogov Anton", email = "akldrix@gmail.com" }]
@@ -8,6 +8,7 @@ license = "GPL-3.0-or-later"
 requires-python = ">=3.13,<4.0"
 keywords = [
   "file-sharing",
+  "message-sharing",
   "local-network",
   "secure-file-transfer",
   "fastapi",
@@ -45,6 +46,10 @@ dependencies = [
   "typing_extensions>=4.16.0",
   "uvicorn>=0.54.0",
   "zipstream-ng>=1.9.3",
+  "aiosqlite>=0.22.1",
+  "greenlet>=3.5.6",
+  "Mako>=1.4.3",
+  "SQLAlchemy>=2.1.6",
 ]
 [tool.poetry]
 packages = [{ include = "shdir", from = "src" }]
