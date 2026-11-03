@@ -14,7 +14,8 @@
         <input type="hidden" id="edit-message-id" value="">
         <input type="hidden" id="edit-chat-id" value="">
         <label for="message-input" id="form-label">Input the message: </label>
-        <input id="message-input" type="text" name="text" placeholder="Type your message here" required>
+        <textarea id="message-input" type="text" name="text" placeholder="Type your message here" required></textarea>
+
         <button type="submit" id="submit-btn">Send the message</button>
         <button type="button" id="cancel-btn" style="display: none;">Cancel</button>
       </form>
@@ -23,7 +24,11 @@
     <div class="message-list">
       {% for message in messages %}
       <div class="message-item">
-        <p class="message-text">{{ message.text }}</p>
+
+        <p class="message-text">
+        {{ message.text|truncate() }}
+        </p>
+
 
         <div class="message-actions">
           <button class="copy-btn" data-text="{{ message.text }}">
@@ -168,44 +173,44 @@
   });
 
   document.querySelectorAll(".copy-btn").forEach(button => {
-  button.addEventListener("click", async (event) => {
-    const btn = event.currentTarget;
-    const messageItem = btn.closest(".message-item");
-    const textToCopy = messageItem.querySelector(".message-text").textContent.trim();
-    const statusSpan = messageItem.querySelector(".copy-status");
+    button.addEventListener("click", async (event) => {
+      const btn = event.currentTarget;
+      const messageItem = btn.closest(".message-item");
+      const textToCopy = messageItem.querySelector(".data-text").textContent.trim();
+      const statusSpan = messageItem.querySelector(".copy-status");
 
-    try {
-      if (navigator.clipboard && window.isSecureContext) {
-        await navigator.clipboard.writeText(textToCopy);
-      } else {
-        const textarea = document.createElement("textarea");
-        textarea.value = textToCopy;
-        textarea.style.position = "fixed";
-        textarea.style.opacity = "0";
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(textToCopy);
+        } else {
+          const textarea = document.createElement("textarea");
+          textarea.value = textToCopy;
+          textarea.style.position = "fixed";
+          textarea.style.opacity = "0";
 
-        document.body.appendChild(textarea);
-        textarea.select();
+          document.body.appendChild(textarea);
+          textarea.select();
 
-        const success = document.execCommand("copy");
-        textarea.remove();
+          const success = document.execCommand("copy");
+          textarea.remove();
 
-        if (!success) {
-          throw new Error("Copy failed");
+          if (!success) {
+            throw new Error("Copy failed");
+          }
         }
+
+        statusSpan.textContent = "Copied!";
+
+        setTimeout(() => {
+          statusSpan.textContent = "";
+        }, 2000);
+
+      } catch (error) {
+        console.error("Copy error:", error);
+        statusSpan.textContent = "Copy failed";
       }
-
-      statusSpan.textContent = "Copied!";
-
-      setTimeout(() => {
-        statusSpan.textContent = "";
-      }, 2000);
-
-    } catch (error) {
-      console.error("Copy error:", error);
-      statusSpan.textContent = "Copy failed";
-    }
+    });
   });
-});
   document.querySelectorAll(".delete-chat-btn").forEach(button => {
     button.addEventListener("click", async (event) => {
       const btn = event.currentTarget;

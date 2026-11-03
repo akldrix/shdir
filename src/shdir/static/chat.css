@@ -362,6 +362,18 @@ body:has(#message-form) > div:has(> #message-form) {
 #message-input {
   flex: 1 1 200px;
   width: 100%;
+  min-height: 50px;
+  min-width: 200px;
+  background-color: var(--surface);
+  border-color: var(--border);
+  border-radius: 11px;
+  border: 1px solid var(--border); 
+
+}
+#message-input:focus {
+  outline: none;
+  border-color: var(--blue);
+
 }
 
 /* Messages container */
@@ -391,8 +403,16 @@ body:has(#message-form) > div:nth-of-type(2):has(.message-text) {
   font-size: 14px;
   line-height: 1.65;
 
-  overflow-wrap: anywhere;
+ /* display: -webkit-box; */
+ /*  -webkit-box-orient: vertical; */
+ /*  -webkit-line-clamp: 20; /* Скроет всё, что идет после 5-й строки */ */
+ /*  overflow: hidden; */
+ /*  text-overflow: ellipsis; */
+ /**/
+ /*  /* Исправление конфликтов */ */
+  overflow-wrap: anywhere; 
   white-space: pre-wrap;
+
 }
 
 /* Message actions */
