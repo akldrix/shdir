@@ -44,8 +44,17 @@ Both applications are accessible through a single local server, with a simple na
 </p>
 
 <p align="center">
-   <img src="docs/screenshots/cli.png" width="700" alt="shdir authentication">
+   <img src="docs/screenshots/cli.png" width="700" alt="shdir cli">
 </p>
+
+<p align="center">
+   <img src="docs/screenshots/chats.png" width="700" alt="shmsg chats">
+</p>
+
+<p align="center">
+   <img src="docs/screenshots/messages.png" width="700" alt="shmsg messages">
+</p>
+
 
 <p align="center">
     <img src="docs/screenshots/mobile.png" width="300" alt="shdir mobile interface">
