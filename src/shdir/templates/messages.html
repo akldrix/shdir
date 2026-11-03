@@ -176,7 +176,7 @@
     button.addEventListener("click", async (event) => {
       const btn = event.currentTarget;
       const messageItem = btn.closest(".message-item");
-      const textToCopy = messageItem.querySelector(".data-text").textContent.trim();
+      const textToCopy = btn.dataset.text.trim();
       const statusSpan = messageItem.querySelector(".copy-status");
 
       try {

@@ -392,7 +392,7 @@ body:has(#message-form) > div:nth-of-type(2):has(.message-text) {
 
 .message-text {
   margin: 0 0 12px;
-  padding: 14px 15px;
+  padding: 0px 15px;
 
   border: 1px solid var(--border-soft);
   border-radius: 10px;
@@ -402,14 +402,6 @@ body:has(#message-form) > div:nth-of-type(2):has(.message-text) {
 
   font-size: 14px;
   line-height: 1.65;
-
- /* display: -webkit-box; */
- /*  -webkit-box-orient: vertical; */
- /*  -webkit-line-clamp: 20; /* Скроет всё, что идет после 5-й строки */ */
- /*  overflow: hidden; */
- /*  text-overflow: ellipsis; */
- /**/
- /*  /* Исправление конфликтов */ */
   overflow-wrap: anywhere; 
   white-space: pre-wrap;
 
