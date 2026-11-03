@@ -7,6 +7,10 @@ shdir is a lightweight, self-hosted file-sharing utility that lets you transfer 
 
 No cloud storage, no accounts, no third-party file-sharing services. Just start the server, scan a QR code, and access your files directly from a browser.
 
+The unified interface also includes **shmsg**, a lightweight messaging system that allows you to create separate chats and exchange text messages directly through your browser.
+
+Both applications are accessible through a single local server, with a simple navigation menu for switching between file sharing and messaging.
+
 ---
 
 ## Features
@@ -21,6 +25,11 @@ No cloud storage, no accounts, no third-party file-sharing services. Just start 
 - **Upload Control** — disable file uploads when you only need to share files.
 - **No Client Installation** — access everything through a standard web browser.
 - **Lightweight Architecture** — powered by FastAPI and Uvicorn.
+- **Multi-Chat Messaging** — create separate chats and exchange text messages through the browser.
+- **Chat Management** — create, open, and delete individual conversations.
+- **Message Management** — edit and delete messages after sending them.
+- **Clipboard Integration** — copy message contents to the clipboard with a single click.
+- **Unified Interface** — switch between shdir and shmsg through a shared navigation menu.
 
 ---
 
@@ -124,6 +133,56 @@ The exact output and address depend on your network configuration.
 4. Browse, download, or upload files.
 
 That's it. No mobile application or additional software is required.
+
+---
+
+## Messaging with shmsg
+
+Shmsg provides a simple browser-based messaging system organized into separate chats.
+
+Instead of keeping all messages in a single conversation, users can create multiple chats and manage their messages independently.
+
+### Creating a Chat
+
+1. Open the shmsg interface using the **To shmsg** navigation link or navigate to `/chat`.
+2. Enter a name for the new chat.
+3. Click **Create new chat**.
+4. Select the newly created chat to open the conversation.
+
+Each chat has its own message history, allowing conversations to remain organized and separate.
+
+### Sending Messages
+
+Once a chat is opened, you can send text messages using the message input field.
+
+Enter your message and click **Send the message** to submit it to the current conversation.
+
+### Managing Messages
+
+shmsg provides several message management operations:
+
+- **Copy** — copy the message contents to the clipboard.
+- **Update** — edit an existing message and save the changes.
+- **Delete** — permanently remove a message from the conversation.
+
+When editing a message, its original contents are loaded into the input field. You can save the changes or cancel the editing operation.
+
+### Managing Chats
+
+Chats can be deleted using the **Delete this chat** button inside an opened conversation.
+
+Deleting a chat removes the conversation as a whole rather than deleting individual messages one by one.
+
+### Switching Between Applications
+
+Both shdir and shmsg are accessible through the same web interface.
+
+Use the navigation menu to switch between:
+
+- **To shdir** — open the file-sharing interface.
+- **To shmsg** — open the chat selection page.
+
+No additional client application or installation is required.
 
 ---
 
@@ -235,6 +294,16 @@ When authentication is enabled, shdir generates a six-digit access code or uses 
 The access code is entered through the web login page.
 
 After successful authentication, the server creates an HTTP-only session cookie used to authorize subsequent requests.
+
+### 7. Messaging with shmsg
+
+shmsg organizes text messages into separate conversations.
+
+Users can create new chats, open existing conversations, and exchange messages through the web interface.
+
+Each message is associated with a specific chat and can be independently edited, deleted, or copied to the clipboard.
+
+Chat management is handled through dedicated endpoints, allowing conversations and their messages to be managed separately.
 
 ---
 
@@ -361,6 +430,8 @@ shdir is a lightweight local utility, not a hardened public file-hosting platfor
 - ZIP archives are assembled in memory, so large directories can consume significant RAM.
 - There is no built-in file deletion, renaming, or editing interface.
 - Existing files can be overwritten during uploads.
+- Messaging is currently text-based; file attachments are not supported within chats.
+- The messaging interface does not include read receipts or online presence indicators.
 
 ---
 
