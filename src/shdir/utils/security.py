@@ -88,5 +88,7 @@ def check_authenticated(request: Request):
     if IS_AUTH_ENABLED:
         session_token = request.cookies.get(COOKIE_NAME)
 
-        if not session_token or not secrets.compare_digest(session_token, SERVER_CODE):
+        if not session_token or not secrets.compare_digest(
+            session_token.encode("UTF-8"), SERVER_CODE.encode("UTF-8")
+        ):
             raise HTTPException(status_code=401, detail="Not authenticated")

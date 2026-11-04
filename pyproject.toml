@@ -1,6 +1,6 @@
 [project]
 name = "shdir"
-version = "1.2.4"
+version = "1.2.6"
 description = "Share your files in local network with secure connection"
 readme = "README.md"
 authors = [{ name = "Rogov Anton", email = "akldrix@gmail.com" }]

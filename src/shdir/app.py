@@ -88,7 +88,7 @@ async def login_page(request: Request):
 @app.post("/login")
 async def login_process(request: Request, code: str = Form(...)):
 
-    if secrets.compare_digest(code, SERVER_CODE):
+    if secrets.compare_digest(code.encode("UTF-8"), SERVER_CODE.encode("UTF-8")):
         response = RedirectResponse("/", status_code=303)
         response.set_cookie(
             key=COOKIE_NAME,
