@@ -25,7 +25,7 @@ from zipstream import ZipStream
 from .cli import args, make_qr
 from .database import Base, engine
 from .routes import router
-from .utils.colors import BLUE, CYAN, RESET
+from .utils.colors import BLUE, CYAN, RED, RESET
 from .utils.logs import log_config, logger
 from .utils.security import (
     COOKIE_NAME,
@@ -34,6 +34,10 @@ from .utils.security import (
     check_authenticated,
     temp_tls_cert,
 )
+
+PORT = 8000
+if args.port:
+    PORT = args.port
 
 IS_HTTPS_ENABLED = args.https
 IS_UPLOAD_DISABLED = args.no_upload
@@ -66,6 +70,8 @@ async def lifespan(app: FastAPI):
     make_qr()
     logger.info(f"\n{BLUE} Server is running. Press Ctrl + C to stop...{RESET}\n")
     yield
+    await engine.dispose()
+    logger.info(f"{RED} Server was stopped by user...{RESET}\n")
 
 
 app = FastAPI(lifespan=lifespan)
@@ -266,7 +272,7 @@ def run_app():
             uvicorn.run(
                 "shdir.app:app",
                 host="0.0.0.0",
-                port=8000,
+                port=PORT,
                 reload=False,
                 log_config=log_config,
                 ssl_certfile=cert_path,
@@ -276,7 +282,7 @@ def run_app():
         uvicorn.run(
             "shdir.app:app",
             host="0.0.0.0",
-            port=8000,
+            port=PORT,
             reload=False,
             log_config=log_config,
         )

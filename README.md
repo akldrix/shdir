@@ -55,12 +55,9 @@ Both applications are accessible through a single local server, with a simple na
    <img src="docs/screenshots/messages.png" width="700" alt="shmsg messages">
 </p>
 
-
 <p align="center">
     <img src="docs/screenshots/mobile.png" width="300" alt="shdir mobile interface">
 </p>
-
-
 
 ---
 
@@ -82,7 +79,6 @@ The server listens on port `8000` and binds to `0.0.0.0`, making it accessible t
 git clone https://github.com/akldrix/shdir
 cd shdir
 ```
-
 
 ### Install dependencies with Poetry
 
@@ -206,6 +202,7 @@ shdir provides several command-line arguments to customize the server.
 | `--code CODE` | `-c CODE` | Set a custom access code. Automatically enables authentication. |
 | `--https` | — | Enable HTTPS using a temporary self-signed TLS certificate. |
 | `--no-upload` | `-u` | Disable file uploads to the computer. |
+| `--port` | `-p` | Set your own port to run the server on (8000 by default) |
 | `--help` | `-h` | Display available command-line arguments. |
 
 ### Examples

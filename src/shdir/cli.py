@@ -39,7 +39,17 @@ parser.add_argument(
     action="store_true",
     help="Run without file upload",
 )
+parser.add_argument(
+    "--port",
+    "-p",
+    type=int,
+    default=8000,
+    help="Set the port to run server on (default: %(default)s)",
+)
 args, _ = parser.parse_known_args()
+PORT = 8000
+if args.port:
+    PORT = args.port
 
 
 def make_qr():
@@ -47,14 +57,15 @@ def make_qr():
     qr = qrcode.QRCode(version=1, box_size=1, border=1)
 
     if is_https:
-        qr.add_data(f"https://{get_local_ip()}:8000/")
+        qr.add_data(f"https://{get_local_ip()}:{PORT}/")
+
         logger.info(
-            f"\n{UNDERLINE}{GREEN} Copy Link: https://{get_local_ip()}:8000/{RESET}\n\n"
+            f"\n{UNDERLINE}{GREEN} Copy Link: https://{get_local_ip()}:{PORT}/{RESET}\n\n"
         )
     else:
-        qr.add_data(f"http://{get_local_ip()}:8000/")
+        qr.add_data(f"http://{get_local_ip()}:{PORT}/")
         logger.info(
-            f"\n{UNDERLINE}{GREEN} Copy Link: http://{get_local_ip()}:8000/{RESET}\n\n"
+            f"\n{UNDERLINE}{GREEN} Copy Link: http://{get_local_ip()}:{PORT}/{RESET}\n\n"
         )
     qr.make(fit=True)
 
